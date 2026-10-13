@@ -5,6 +5,8 @@
 *.gba
 !data/*.gba
 guia_web/
+emulator/
+dev_scripts/data_cache/
 *.sgm
 *.sa1
 *.ss[0-9]

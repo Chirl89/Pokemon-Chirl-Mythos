@@ -1,8 +1,8 @@
 {
   "game_name": "Pokemon Chirl Mythos",
-  "version": "v0.1.0",
+  "version": "v0.2.5",
   "rom_file": "pokehns.gba",
-  "current_step": 1.0,
+  "current_step": 2.0,
   "active_step": 2.0,
   "guide_sync": true,
   "history": [
@@ -10,6 +10,11 @@
       "step": 1.0,
       "version": "v0.1.0",
       "description": "Despliegue inicial de base pokehns-expansion, resolución de cabeceras HNS y compilación limpia verificada de la ROM oficial (32 MB) firmada como POKEMON CHIRL."
+    },
+    {
+      "step": 2.0,
+      "version": "v0.2.1",
+      "description": "Localización Integral al Castellano (100%): interfaz, menús, tipos (TYPE_NAME_LENGTH ajustado a 10) y naturalezas oficiales."
     }
   ]
 }

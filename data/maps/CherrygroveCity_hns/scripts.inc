@@ -278,119 +278,117 @@ CherryGroveCity_Silver_AfterBattle::
 	end
 
 CherrygroveCity_Text_GuideGentIntro:
-	.string "You're a rookie trainer,\n"
-	.string "aren't you? I can tell!\p"
-	.string "That's OK! Everyone is a\n"
-	.string "rookie at some point!\p"
-	.string "If you'd like, I can teach\n"
-	.string "you a few things.$"
+	.string "Eres un entrenador novato,\n"
+	.string "¿a que sí? ¡Se te nota a la legua!\p"
+	.string "¡No pasa nada! ¡Todo el mundo es\n"
+	.string "novato al principio!\p"
+	.string "Si quieres, puedo enseñarte\n"
+	.string "un par de cosas.$"
 
 CherrygroveCity_Text_GuideGentTourStart:
-	.string "OK, then!\n"
-	.string "Follow me!$"
+	.string "¡Pues allá vamos!\n"
+	.string "¡Sígueme!$"
 
 CherrygroveCity_Text_GuideGentPokecenter:
-	.string "This is a POKéMON CENTER.\p"
-	.string "They heal your POKéMON in no\n"
-	.string "time at all.\p"
-	.string "You'll be relying on them a lot,\n"
-	.string "so you better learn about them.$"
+	.string "Esto es un CENTRO POKéMON.\p"
+	.string "Aquí curan a tus POKéMON en un\n"
+	.string "abrir y cerrar de ojos.\p"
+	.string "Vas a necesitarlos muy a menudo,\n"
+	.string "así que acuérdate de dónde están.$"
 
 CherrygroveCity_Text_GuideGentMart:
-	.string "This is a POKéMON MART.\p"
-	.string "They sell BALLS for catching wild\n"
-	.string "POKéMON and other useful items.$"
+	.string "Esto es una TIENDA POKéMON.\p"
+	.string "Venden BALLS para atrapar POKéMON\n"
+	.string "salvajes y otros objetos útiles.$"
 
 CherrygroveCity_Text_GuideGentRoute30:
-	.string "ROUTE 30 is out this way.\p"
-	.string "Trainers will be battling\n"
-	.string "their prized POKéMON there.$"
+	.string "Por aquí se va a la RUTA 30.\p"
+	.string "Allí los entrenadores combaten con\n"
+	.string "sus queridos POKéMON.$"
 
 CherrygroveCity_Text_GuideGentSea:
-	.string "This is the sea, as you can see.\p"
-	.string "Some POKéMON are found only in\n"
-	.string "in water.$"
+	.string "Y esto de aquí es el mar.\p"
+	.string "Algunos POKéMON solo se encuentran\n"
+	.string "en el agua.$"
 
 CherrygroveCity_Text_GuideGentMap:
-	.string "Here…\p"
-	.string "It's my house! Thanks for\n"
-	.string "your company.\p"
-	.string "Oh, and if you're ever lost, check\n"
-	.string "the MAP on your POKéGEAR!\p"
-	.string "I wish you luck on your journey!$"
+	.string "Y por último…\p"
+	.string "¡Esta es mi casa! Gracias por tu\n"
+	.string "compañía.\p"
+	.string "¡Ah, y si alguna vez te pierdes, mira\n"
+	.string "el MAPA de tu POKéGEAR!\p"
+	.string "¡Te deseo mucha suerte en tu viaje!$"
 
 CherrygroveCity_Text_GuideGentDecline:
-	.string "Oh… It's something I enjoy\n"
-	.string "doing…\p"
-	.string "Fine. Come see me whenever\n"
-	.string "you like.$"
+	.string "Vaya… Es algo que me gusta hacer…\p"
+	.string "En fin. Ven a verme cuando quieras.$"
 
 CherrygroveCity_Text_RivalSeen:
 	.string "… … … … … … … …\p"
-	.string "You got a POKéMON at the LAB.\p"
-	.string "What a waste.\n"
-	.string "A wimp like you.\p"
+	.string "Has conseguido un POKéMON en el\n"
+	.string "LABORATORIO.\p"
+	.string "Vaya desperdicio.\n"
+	.string "En manos de un debilucho como tú.\p"
 	.string "… … … … … … … …\p"
-	.string "Don't you get what I'm saying?\n"
-	.string "Well, I too, have a good POKéMON.\p"
-	.string "I'll show you what I mean!$"
+	.string "¿No lo pillas?\n"
+	.string "Bueno, pues yo también tengo un buen\n"
+	.string "POKéMON.\p"
+	.string "¡Te voy a enseñar de lo que hablo!$"
 
 CherrygroveCity_Text_SilverWin:
-	.string "Humph. Are you happy you won?$"
+	.string "Bah. ¿Tan contento estás por ganar?$"
 
 CherrygroveCity_Text_RivalAfter:
 	.string "… … … … … … … …\p"
-	.string "Do you want to know who I am?\p"
-	.string "I'm going to be the world's\n"
-	.string "greatest POKéMON trainer.$"
+	.string "¿Quieres saber quién soy?\p"
+	.string "¡Voy a ser el mejor entrenador\n"
+	.string "POKéMON del mundo!$"
 
 CherrygroveCity_Text_RivalID:
-	.string "Give it back!\n"
-	.string "That's my TRAINER CARD!\p"
-	.string "Oh no!\n"
-	.string "You saw my name...$"
+	.string "¡Devuélvemela!\n"
+	.string "¡Esa es mi FICHA de ENTRENADOR!\p"
+	.string "¡Maldita sea!\n"
+	.string "Has visto mi nombre...$"
 
 CherrygroveCity_Text_TeacherHaveMapCard:
-	.string "When you're with POKéMON,\n"
-	.string "going anywhere is fun.$"
+	.string "Cuando vas con un POKéMON,\n"
+	.string "cualquier viaje es divertido.$"
 
 CherrygroveCity_Text_YoungsterNoPokedex:
-	.string "MR. POKéMON's house is still\n"
-	.string "farther up ahead.$"
+	.string "La casa del SR. POKéMON está\n"
+	.string "más adelante.$"
 
 CherrygroveCity_Text_YoungsterHavePokedex:
-	.string "I battled the trainers on the\n"
-	.string "road.\p"
-	.string "My POKéMON lost. They're a\n"
-	.string "mess! I must take them to a\l"
-	.string "POKéMON CENTER.$"
+	.string "He luchado contra los entrenadores\n"
+	.string "del camino.\p"
+	.string "Mis POKéMON perdieron. ¡Están para\n"
+	.string "el arrastre! Tengo que llevarlos\l"
+	.string "al CENTRO POKéMON.$"
 
 CherrygroveCity_Text_MysticWaterGuyBefore:
-	.string "A POKéMON I caught had an\n"
-	.string "item.\p"
-	.string "I think it's MYSTIC WATER.\p"
-	.string "I don't need it, so do you\n"
-	.string "want it?$"
+	.string "Un POKéMON que capturé llevaba\n"
+	.string "un objeto.\p"
+	.string "Creo que es un AGUA MÍSTICA.\p"
+	.string "Yo no la necesito, ¿la quieres tú?$"
 
 CherrygroveCity_Text_MysticWaterGuyAfter:
-	.string "Back to fishing for me, then.$"
+	.string "Pues nada, a seguir pescando.$"
 
 CherrygroveCity_Text_CitySign:
-	.string "CHERRYGROVE CITY\p"
-	.string "The City of Cute, Fragrant\n"
-	.string "Flowers$"
+	.string "CIUDAD CEREZO\p"
+	.string "La ciudad de las flores aromáticas.$"
 
 CherrygroveCity_Text_GuideGentsHouseSign:
-	.string "GUIDE GENT'S HOUSE$"
+	.string "CASA DEL ABUELO GUÍA$"
 
 CherryGroveCity_Text_Staryu:
-	.string "STARYU: Yuuuuuuuu.$"
+	.string "STARYU: ¡Yuuu!$"
 
 CherryGroveCity_Text_Corsola:
-	.string "CORSOLA: Corsola! La!$"
+	.string "CORSOLA: ¡Corsola, la!$"
 
 CherryGroveCity_Text_Krabby:
-	.string "KRABBY: KOOOOKEEE!$"
+	.string "KRABBY: ¡Kuuukiii!$"
 
 CherryGroveCity_Movement_Trigger_Gent:
 	walk_down

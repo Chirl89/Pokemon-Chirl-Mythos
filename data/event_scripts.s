@@ -1490,69 +1490,66 @@ gText_PokemonTrainerSchoolEmail::
 	.string "… … … … … …$"
 
 gText_PlayerHouseBootPC::
-	.string "{PLAYER} booted up the PC.$"
+	.string "{PLAYER} encendió el PC.$"
 
 gText_PokeblockLinkCanceled::
-	.string "The link was canceled.$"
+	.string "Se canceló la conexión.$"
 
 gText_UnusedNicknameReceivedPokemon::
-	.string "Want to give a nickname to\n"
-	.string "the {STR_VAR_2} you received?$"
+	.string "¿Quieres ponerle un mote al\n"
+	.string "{STR_VAR_2} que has recibido?$"
 
 gText_PlayerWhitedOut::
-	.string "{PLAYER} is out of usable\n"
-	.string "POKéMON!\p{PLAYER} whited out!$"
+	.string "¡A {PLAYER} no le quedan más\n"
+	.string "POKéMON para luchar!\p¡{PLAYER} perdió el conocimiento!$"
 
 gText_FirstShouldRestoreMonsHealth::
-	.string "First, you should restore your\n"
-	.string "POKéMON to full health.$"
+	.string "Primero deberías curar a tus POKéMON.$"
 
 gText_MonsHealedShouldBuyPotions::
-	.string "Your POKéMON have been healed\n"
-	.string "to perfect health.\p"
-	.string "If your POKéMON's energy, HP,\n"
-	.string "is down, please come see us.\p"
-	.string "If you're planning to go far in the\n"
-	.string "field, you should buy some POTIONS\l"
-	.string "at the POKéMON MART.\p"
-	.string "We hope you excel!$"
+	.string "Tus POKéMON han recuperado toda\n"
+	.string "su vitalidad.\p"
+	.string "Si tus POKéMON pierden energía o PS,\n"
+	.string "ven a vernos.\p"
+	.string "Si vas a viajar lejos, deberías comprar\n"
+	.string "algunas POCIONES en la TIENDA POKéMON.\p"
+	.string "¡Que tengas buen viaje!$"
 
 gText_MonsHealed::
-	.string "Your POKéMON have been healed\n"
-	.string "to perfect health.\p"
-	.string "We hope you excel!$"
+	.string "Tus POKéMON han recuperado toda\n"
+	.string "su vitalidad.\p"
+	.string "¡Que tengas buen viaje!$"
 
 gText_HadQuiteAnExperienceTakeRest::
-	.string "MOM: {PLAYER}!\n"
-	.string "Welcome home.\p"
-	.string "It sounds like you had quite\n"
-	.string "an experience.\p"
-	.string "Maybe you should take a quick\n"
-	.string "rest.$"
+	.string "MADRE: ¡{PLAYER}!\n"
+	.string "Bienvenido a casa.\p"
+	.string "Parece que has vivido toda una\n"
+	.string "aventura.\p"
+	.string "Deberías descansar un poco.$"
 
 gText_MomExplainHPGetPotions::
-	.string "MOM: Oh, good! You and your\n"
-	.string "POKéMON are looking great.\p"
-	.string "I just heard from {STR_VAR_1}.\p"
-	.string "He said that POKéMON's energy is\n"
-	.string "measured in HP.\p"
-	.string "If your POKéMON lose their HP,\n"
-	.string "you can restore them at any\l"
-	.string "POKéMON CENTER.\p"
-	.string "If you're going to travel far away,\n"
-	.string "the smart TRAINER stocks up on\l"
-	.string "POTIONS at the POKéMON MART.\p"
-	.string "Make me proud, honey!\p"
-	.string "Take care!$"
+	.string "MADRE: ¡Qué bien! Tú y tus POKéMON\n"
+	.string "tenéis un aspecto fantástico.\p"
+	.string "Acabo de hablar con {STR_VAR_1}.\p"
+	.string "Dijo que la energía de los POKéMON se\n"
+	.string "mide en PS.\p"
+	.string "Si tus POKéMON pierden sus PS,\n"
+	.string "puedes curarlos en cualquier\l"
+	.string "CENTRO POKéMON.\p"
+	.string "Si vas a viajar lejos, un ENTRENADOR\n"
+	.string "prudente se abastece de POCIONES en\l"
+	.string "la TIENDA POKéMON.\p"
+	.string "¡Haz que me sienta orgullosa, cielo!\p"
+	.string "¡Cuídate mucho!$"
 
 #if IS_HNS
 gText_RegisteredTrainerinPokeNav::
-	.string "Registered {STR_VAR_1} {STR_VAR_2}\n"
-	.string "in the POKéGEAR.$"
+	.string "Se registró a {STR_VAR_1} {STR_VAR_2}\n"
+	.string "en el POKéGEAR.$"
 #else
 gText_RegisteredTrainerinPokeNav::
-	.string "Registered {STR_VAR_1} {STR_VAR_2}\n"
-	.string "in the POKéNAV.$"
+	.string "Se registró a {STR_VAR_1} {STR_VAR_2}\n"
+	.string "en el POKéNAV.$"
 #endif
 
 gText_ComeBackWithSecretPower::

@@ -1,0 +1,388 @@
+{
+  "NewBarkTown_Lab_Text_ElmAideIsWaiting": [
+    "{PLAYER}!\\p",
+    "What are you doing here?\\p",
+    "My aide is still waiting for you\\n",
+    "In VIOLET CITY!$"
+  ],
+  "NewBarkTown_Lab_Text_ShouldntTouch": [
+    "Probably shouldn't touch!$"
+  ],
+  "NewBarkTown_Lab_Text_ElmIntro": [
+    "ELM: {PLAYER}! There you are!\\p",
+    "I needed to ask you a favor.\\p",
+    "I'm conducting new POKÃ©MON\\n",
+    "research right now. I was\\l",
+    "wondering if you could help\\l",
+    "me with it, {PLAYER}.\\p",
+    "You seeâ¦\\p",
+    "I'm writing a paper that I\\n",
+    "want to present at a conference.\\p",
+    "But there are some things I\\n",
+    "don't quite understand yet.\\p",
+    "So!\\p",
+    "I'd like you to raise a\\n",
+    "POKÃ©MON that I recently caught.$"
+  ],
+  "NewBarkTown_Lab_Text_ElmAccepted": [
+    "Thanks, {PLAYER}!\\n",
+    "You're a great help!$"
+  ],
+  "NewBarkTown_Lab_Text_ElmRefused": [
+    "Butâ¦ Please, I need your\\n",
+    "help!$"
+  ],
+  "NewBarkTown_Lab_Text_ElmResearchAmbitions": [
+    "When I announce my findings,\\n",
+    "I'm sure we'll delve deeper\\p",
+    "into the many mysteries of\\n",
+    "POKÃ©MON.\\p",
+    "You can count on it!$"
+  ],
+  "NewBarkTown_Lab_Text_ElmGotAnEmail": [
+    "Oh, hey! I got an e-mail!\\p",
+    "â¦ â¦ â¦ â¦ â¦ â¦ â¦ â¦\\n",
+    "Hmâ¦ Uh-huhâ¦\\p",
+    "Okayâ¦$"
+  ],
+  "NewBarkTown_Lab_Text_ElmMissionFromMrPokemon": [
+    "Hey, listen.\\p",
+    "I have an acquaintance called\\n",
+    "MR. POKÃ©MON.\\p",
+    "He keeps finding weird things and\\n",
+    "raving about his discoveries.\\p",
+    "Anyway, I just got an e-mail\\n",
+    "from him saying that this\\l",
+    "time it's real.\\p",
+    "It is intriguing, but we're\\n",
+    "busy with our POKÃ©MON research...\\p",
+    "Wait!\\n",
+    "I know!\\p",
+    "{PLAYER}, can you go in our\\n",
+    "place?$"
+  ],
+  "NewBarkTown_Lab_Text_ElmChooseAPokemon": [
+    "I want you to raise one of\\n",
+    "the POKÃ©MON contained in these BALLS.\\p",
+    "You'll be that POKÃ©MON's\\n",
+    "first partner, {PLAYER}!\\p",
+    "Go on. Pick one!$"
+  ],
+  "NewBarkTown_Lab_Text_ElmWhereGoing": [
+    "ELM: Wait! Where are you\\n",
+    "going?$"
+  ],
+  "NewBarkTown_Lab_Text_ChooseCyndaquil": [
+    "ELM: You'll take {STR_VAR_1},\\n",
+    "the {STR_VAR_2} POKÃ©MON?$"
+  ],
+  "NewBarkTown_Lab_Text_ChooseTotodile": [
+    "ELM: Do you want {STR_VAR_1},\\n",
+    "the {STR_VAR_2} POKÃ©MON?$"
+  ],
+  "NewBarkTown_Lab_Text_ChooseChikorita": [
+    "ELM: So, you like {STR_VAR_1},\\n",
+    "the {STR_VAR_2} POKÃ©MON?$"
+  ],
+  "NewBarkTown_Lab_Text_DidntChooseStarter": [
+    "ELM: Think it over carefully.\\p",
+    "Your partner is important.$"
+  ],
+  "NewBarkTown_Lab_Text_ChoseStarter": [
+    "ELM: I think that's a great\\n",
+    "POKÃ©MON too!$"
+  ],
+  "NewBarkTown_Lab_Text_ReceivedStarter": [
+    "{PLAYER} received {STR_VAR_1}!$"
+  ],
+  "NewBarkTown_Lab_Text_Nickname": [
+    "Would you like to give your\\n",
+    "{STR_VAR_1} a nickname?$"
+  ],
+  "NewBarkTown_Lab_Text_ElmDirections1": [
+    "MR. POKÃ©MON lives a little bit\\n",
+    "beyond CHERRYGROVE, the next\\l",
+    "city over.\\p",
+    "It's almost a direct route\\n",
+    "there, so you can't miss it.\\p",
+    "But just in case, you have my\\n",
+    "phone number. Call me if\\l",
+    "anything comes up!$"
+  ],
+  "NewBarkTown_Lab_Text_ElmDirections1_Register": [
+    "MR. POKÃ©MON lives a little bit\\n",
+    "beyond CHERRYGROVE, the next\\l",
+    "city over.\\p",
+    "It's almost a direct route\\n",
+    "there, so you can't miss it.\\p",
+    "But just in case, here's my\\n",
+    "phone number. Call me if\\l",
+    "anything comes up!$"
+  ],
+  "NewBarkTown_Lab_Text_RegisteredElm": [
+    "Registered PROF.ELM\\n",
+    "in the POKÃ©GEAR.$"
+  ],
+  "NewBarkTown_Lab_Text_ElmLetYourMonBattle": [
+    "If a wild POKÃ©MON appears,\\n",
+    "let your POKÃ©MON battle it!$"
+  ],
+  "NewBarkTown_Lab_Text_ElmDirections2": [
+    "If a wild POKÃ©MON appears, let\\n",
+    "your POKÃ©MON battle it!\\p",
+    "If your POKÃ©MON is hurt, you\\n",
+    "should heal it with the machine\\l",
+    "to my right, or at the POKÃ©CENTER.\\p",
+    "I'm counting on you!$"
+  ],
+  "NewBarkTown_Lab_Text_GotElmsNumber": [
+    "{PLAYER} got ELM's phone\\n",
+    "number.$"
+  ],
+  "NewBarkTown_Lab_Text_ElmDescribesMrPokemon": [
+    "MR. POKÃ©MON goes everywhere and\\n",
+    "finds rarities.\\p",
+    "Too bad they're just rare and\\n",
+    "not very usefulâ¦$"
+  ],
+  "NewBarkTown_Lab_Text_ElmPokeBall": [
+    "It contains a POKÃ©MON caught\\n",
+    "by PROF.ELM.$"
+  ],
+  "NewBarkTown_Lab_Text_ElmAfterTheft1": [
+    "ELM: {PLAYER}, this is terribleâ¦\\p",
+    "Oh, yes, what was MR. POKÃ©MON's\\n",
+    "big discovery?$"
+  ],
+  "NewBarkTown_Lab_Text_ElmAfterTheft2": [
+    "{PLAYER} handed the MYSTERY EGG\\n",
+    "to PROF.ELM.$"
+  ],
+  "NewBarkTown_Lab_Text_ElmAfterTheft3": [
+    "ELM: This?$"
+  ],
+  "NewBarkTown_Lab_Text_ElmAfterTheft4": [
+    "Butâ¦ Is it a POKÃ©MON EGG?\\p",
+    "If it is, it is a great\\n",
+    "discovery!\\p",
+    "ELM: What?!?\\p",
+    "PROF.OAK gave you a POKÃ©DEX?\\p",
+    "{PLAYER}, is that true?\\n",
+    "Th-that's incredible!\\p",
+    "He is superb at seeing the\\n",
+    "potential of people as trainers.\\p",
+    "Wow, {PLAYER}. You may have what\\n",
+    "it takes to become the CHAMPION.\\p",
+    "You seem to be getting on\\n",
+    "great with POKÃ©MON too.\\p",
+    "You should take the POKÃ©MON\\n",
+    "GYM challenge.\\p",
+    "The closest GYM would be the\\n",
+    "one in VIOLET CITY.\\p",
+    "â¦{PLAYER}. The road to the\\n",
+    "championship will be a long one.\\p",
+    "Before you leave, make sure\\n",
+    "that you talk to your mom.$"
+  ],
+  "NewBarkTown_Lab_Text_ElmStudyingEgg": [
+    "ELM: Don't give up!\\n",
+    "I'll call if I learn anything\\l",
+    "about that EGG!$"
+  ],
+  "NewBarkTown_Lab_Text_ElmAideHasEgg": [
+    "ELM: {PLAYER}? Didn't you meet\\n",
+    "my assistant?\\p",
+    "He should have met you with\\n",
+    "the EGG at VIOLET CITY's\\p",
+    "POKÃ©MON CENTER.\\p",
+    "You must have just missed him.\\n",
+    "Try to catch him there.$"
+  ],
+  "NewBarkTown_Lab_Text_ElmWaitingEggHatch": [
+    "ELM: Hey, has that EGG changed\\n",
+    "any?$"
+  ],
+  "NewBarkTown_Lab_Text_ElmThoughtEggHatched": [
+    "{PLAYER}? I thought the EGG\\n",
+    "hatched.\\p",
+    "Where is the POKÃ©MON?$"
+  ],
+  "NewBarkTown_Lab_Text_ShowTogepi1": [
+    "ELM: {PLAYER}, you look great!$"
+  ],
+  "NewBarkTown_Lab_Text_ShowTogepi2": [
+    "What? That POKÃ©MON!?!$"
+  ],
+  "NewBarkTown_Lab_Text_ShowTogepi3": [
+    "The EGG hatched! So, POKÃ©MON\\n",
+    "are born from EGGSâ¦\\p",
+    "No, perhaps not all POKÃ©MON\\n",
+    "are.\\p",
+    "Wow, there's still a lot of\\n",
+    "research to be done.$"
+  ],
+  "NewBarkTown_Lab_Text_ElmGiveEverstone1": [
+    "Thanks, {PLAYER}! You're helping\\n",
+    "unravel POKÃ©MON mysteries for us!\\p",
+    "I want you to have this as a\\n",
+    "token of our appreciation.$"
+  ],
+  "NewBarkTown_Lab_Text_ElmGiveEverstone2": [
+    "That's an EVERSTONE.\\p",
+    "Some species of POKÃ©MON evolve\\n",
+    "when they grow to certain levels.\\p",
+    "A POKÃ©MON holding the EVERSTONE\\n",
+    "won't evolve.\\p",
+    "Give it to a POKÃ©MON you don't\\n",
+    "want to evolve.$"
+  ],
+  "NewBarkTown_Lab_Text_ElmCallYou": [
+    "ELM: {PLAYER}, I'll call you if\\n",
+    "anything comes up.$"
+  ],
+  "NewBarkTown_Lab_Text_AideAfterTheft": [
+    "â¦sighâ¦ That stolen POKÃ©MON.\\p",
+    "I wonder how it's doing.\\p",
+    "They say a POKÃ©MON raised by a\\n",
+    "bad person turns bad itself.$"
+  ],
+  "NewBarkTown_Lab_Text_ElmGiveMasterBall1": [
+    "ELM: Hi, {PLAYER}!\\p",
+    "Thanks to you, my research is\\n",
+    "going great!\\p",
+    "Take this as a token of my\\n",
+    "appreciation.$"
+  ],
+  "NewBarkTown_Lab_Text_ElmGiveMasterBall2": [
+    "The MASTER BALL is the best!\\p",
+    "It's the ultimate BALL! It'll\\n",
+    "catch any POKÃ©MON without fail.\\p",
+    "It's given only to recognized\\n",
+    "POKÃ©MON researchers.\\p",
+    "I think you can make much better\\n",
+    "use of it than I can, {PLAYER}!$"
+  ],
+  "NewBarkTown_Lab_Text_KimonoGirls": [
+    "By the way...\\n",
+    "A group of beautiful KIMONO\\l",
+    "GIRLS were looking for you.\\p",
+    "They told me they are\\n",
+    "waiting for you at the\\l",
+    "ECRUTEAK DANCE THEATER.\\p",
+    "I know you've gone through many\\n",
+    "things since that EGG got you\\l",
+    "involved in all this...\\p",
+    "I hope you'll carry through it.$"
+  ],
+  "NewBarkTown_Lab_Text_KimonoWaiting": [
+    "PROF.ELM: The KIMONO\\n",
+    "GIRLS are waiting for you at\\l",
+    "the ECRUTEAK DANCE THEATER.$"
+  ],
+  "NewBarkTown_Lab_Text_League": [
+    "PROF.ELM: Hahaha...\\n",
+    "Good job!\\p",
+    "That rare EGG has brought you\\n",
+    "a lot of trouble, huh?\\p",
+    "The KIMONO GIRLS said something\\n",
+    "about me?\\p",
+    "I have nothing to do with it.\\p",
+    "You made your decision and went\\n",
+    "through with it.\\p",
+    "Having done so much, you should\\n",
+    "be able to face the LEAGUE now!\\p",
+    "You should head for INDIGO\\n",
+    "PLATEAU!\\p",
+    "Do you know how to get there?\\n",
+    "Follow ROUTE 27 to ROUTE 26.\\p",
+    "Once there, go straight north!$"
+  ],
+  "NewBarkTown_Lab_Text_ElmGiveTicket1": [
+    "ELM: {PLAYER}! There you are!\\p",
+    "I called because I have\\n",
+    "something for you.\\p",
+    "See? It's an S.S.TICKET.\\p",
+    "Now you can catch POKÃ©MON in\\n",
+    "KANTO.$"
+  ],
+  "NewBarkTown_Lab_Text_ElmGiveTicket2": [
+    "The ship departs from OLIVINE\\n",
+    "CITY.\\p",
+    "But you knew that already,\\n",
+    "{PLAYER}.\\p",
+    "After all, you've traveled all\\n",
+    "over with your POKÃ©MON.\\p",
+    "Give my regards to PROF.OAK in\\n",
+    "KANTO!$"
+  ],
+  "NewBarkTown_Lab_Text_LabMonEgg": [
+    "It's the POKÃ©MON EGG being\\n",
+    "studied by PROF.ELM.$"
+  ],
+  "NewBarkTown_Lab_Text_AideGivePotion": [
+    "{PLAYER}, I want you to have\\n",
+    "this for your errand.$"
+  ],
+  "NewBarkTown_Lab_Text_AideAlwaysBusy": [
+    "There are only three of us, so\\n",
+    "we're always busy.$"
+  ],
+  "NewBarkTown_Lab_Text_AideSave": [
+    "Don't forget to save your game\\n",
+    "regularly!\\p",
+    "Press the START button, then\\n",
+    "SAVE the game!$"
+  ],
+  "NewBarkTown_Lab_Text_AideTheftTestimony": [
+    "There was a loud noise\\n",
+    "outsideâ¦\\p",
+    "When we went to look,\\n",
+    "someone stole a POKÃ©MON.\\p",
+    "It's unbelievable that anyone\\n",
+    "would do that!\\p",
+    "â¦sighâ¦ That stolen POKÃ©MON.\\p",
+    "I wonder how it's doing.\\p",
+    "They say a POKÃ©MON raised by a\\n",
+    "bad person turns bad itself.$"
+  ],
+  "NewBarkTown_Lab_Text_AideGiveBalls": [
+    "{PLAYER}!\\p",
+    "Use these on your POKÃ©DEX\\n",
+    "quest!$"
+  ],
+  "NewBarkTown_Lab_Text_AideExplainBalls": [
+    "To add to your POKÃ©DEX, you\\n",
+    "have to catch POKÃ©MON.\\p",
+    "Throw POKÃ© BALLS at wild\\n",
+    "POKÃ©MON to get them.$"
+  ],
+  "NewBarkTown_Lab_Text_Officer1": [
+    "I heard a POKÃ©MON was stolen\\n",
+    "hereâ¦\\p",
+    "I was just getting some\\n",
+    "information from PROF.ELM.\\p",
+    "Apparently, it was a young\\n",
+    "male with long, red hairâ¦\\p",
+    "What?\\p",
+    "You battled a trainer like\\n",
+    "that?\\p",
+    "Did you happen to get his\\n",
+    "name?$"
+  ],
+  "NewBarkTown_Lab_Text_Officer2_1": [
+    "OK! So {RIVAL} was his name?$"
+  ],
+  "NewBarkTown_Lab_Text_Officer2": [
+    "Thanks for helping my\\n",
+    "investigation!$"
+  ],
+  "NewBarkTown_Lab_Text_OfficerNo": [
+    "Surely you got his name?!$"
+  ],
+  "NewBarkTown_Lab_Text_Elm_CallMe": [
+    "Ah, {PLAYER}!\\p",
+    "How's your POKÃ©DEX coming along?\\n",
+    "I'm busy now, but call me sometime\\l",
+    "and I can check your progress!$"
+  ]
+}

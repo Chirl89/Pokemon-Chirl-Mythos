@@ -353,10 +353,10 @@ static const u8 *const sChoices_OriginalModern[] = {
     COMPOUND_STRING("MODERN"),
 };
 
-static const u8 sText_TopBar_Left[]   = _("{L_BUTTON}PREVIOUS");
-static const u8 sText_TopBar_Right[]  = _("{R_BUTTON}NEXT");
-static const u8 sText_TopBar_Save[]   = _("{R_BUTTON}SAVE");
-static const u8 sText_TopBar_Cancel[] = _("{B_BUTTON}CANCEL");
+static const u8 sText_TopBar_Left[]   = _("{L_BUTTON}ANTERIOR");
+static const u8 sText_TopBar_Right[]  = _("{R_BUTTON}SIGUIENTE");
+static const u8 sText_TopBar_Save[]   = _("{R_BUTTON}GUARDAR");
+static const u8 sText_TopBar_Cancel[] = _("{B_BUTTON}CANCELAR");
 
 // =============================================================================
 // Tab item tables — skeleton placeholders
