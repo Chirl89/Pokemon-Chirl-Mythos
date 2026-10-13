@@ -64,3 +64,11 @@ Cuando Carlos escriba `"paso finalizado"`:
 * **Responsabilidad Directa del Agente:** El agente es el responsable de gestionar el control de versiones con Git de manera proactiva.
 * **Push Automático Obligatorio:** Siempre que se completen cambios, se generen commits o se finalicen tareas (tanto en el repositorio del juego `Pokemon-Chirl-Mythos` como en el de la guía web `Pokemon-Chirl-Mythos-Guia`), el agente debe ejecutar automáticamente `git push` a los repositorios remotos sin delegar esta tarea a Carlos.
 
+---
+
+## 8. Prohibición Absoluta de Compilación por el Agente
+* **JAMÁS compilar:** El agente tiene terminantemente prohibido ejecutar comandos de compilación (`make`, scripts de build de la ROM, etc.).
+* **Compilación exclusiva de Carlos:** La compilación del juego la realiza única y exclusivamente Carlos en su propio entorno.
+* **Flujo tras la compilación:** El agente aplicará los cambios de código y esperará a que Carlos pruebe y compile. Cuando Carlos dé el aviso, el agente procederá a realizar el commit y `git push`.
+
+

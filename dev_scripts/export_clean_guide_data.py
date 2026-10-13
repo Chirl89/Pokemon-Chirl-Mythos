@@ -27,12 +27,64 @@ def load_types_map():
         "TYPE_STELLAR": "Terapápago"
     }
 
+def load_items_dict():
+    items = {
+        "ITEM_FIRE_STONE": "Piedra Fuego",
+        "ITEM_WATER_STONE": "Piedra Agua",
+        "ITEM_THUNDER_STONE": "Piedra Trueno",
+        "ITEM_LEAF_STONE": "Piedra Hoja",
+        "ITEM_MOON_STONE": "Piedra Lunar",
+        "ITEM_SUN_STONE": "Piedra Solar",
+        "ITEM_SHINY_STONE": "Piedra Día",
+        "ITEM_DUSK_STONE": "Piedra Noche",
+        "ITEM_DAWN_STONE": "Piedra Alba",
+        "ITEM_ICE_STONE": "Piedra Hielo",
+        "ITEM_LINKING_CORD": "Cordón Unión",
+        "ITEM_KINGS_ROCK": "Roca del Rey",
+        "ITEM_METAL_COAT": "Revestimiento Metálico",
+        "ITEM_DRAGON_SCALE": "Escama Dragón",
+        "ITEM_UP_GRADE": "Mejora",
+        "ITEM_DUBIOUS_DISC": "Disco Extraño",
+        "ITEM_PROTECTOR": "Protector",
+        "ITEM_ELECTIRIZER": "Electrizador",
+        "ITEM_MAGMARIZER": "Magmatizador",
+        "ITEM_REAPER_CLOTH": "Tela Terrible",
+        "ITEM_PRISM_SCALE": "Escama Bella",
+        "ITEM_OVAL_STONE": "Piedra Oval",
+        "ITEM_RAZOR_CLAW": "Garra Afilada",
+        "ITEM_RAZOR_FANG": "Colmillo Afilado",
+        "ITEM_DEEP_SEA_TOOTH": "Diente Marino",
+        "ITEM_DEEP_SEA_SCALE": "Escama Marina",
+        "ITEM_SWEET_APPLE": "Manzana Dulce",
+        "ITEM_TART_APPLE": "Manzana Ácida",
+        "ITEM_CRACKED_POT": "Tetera Rota",
+        "ITEM_CHIPPED_POT": "Tetera Agrietada",
+        "ITEM_GALARICA_CUFF": "Brazal Galanuez",
+        "ITEM_GALARICA_WREATH": "Corona Galanuez",
+        "ITEM_BLACK_AUGURITE": "Mineral Negro",
+        "ITEM_PEAT_BLOCK": "Bloque Turba",
+    }
+    try:
+        with open('src/data/items.h', 'r', encoding='utf-8', errors='ignore') as f:
+            text = f.read()
+        blocks = text.split('\n    [ITEM_')
+        for b in blocks[1:]:
+            item_const = 'ITEM_' + b.split(']')[0].strip()
+            if item_const not in items:
+                m = re.search(r'\.name\s*=\s*(?:ITEM_NAME|COMPOUND_STRING|_\()\s*\(\"([^\"]+)\"\)', b)
+                if not m:
+                    m = re.search(r'\.name\s*=\s*[A-Z_]*\(\"([^\"]+)\"\)', b)
+                if m:
+                    items[item_const] = m.group(1).title()
+    except Exception as e:
+        print("Warning loading items.h:", e)
+    return items
+
 def load_abilities():
     abilities = {}
     with open('src/data/abilities.h', 'r', encoding='utf-8', errors='ignore') as f:
         content = f.read()
     
-    # [ABILITY_XYZ] = { .name = _("NAME"), .description = ... }
     blocks = content.split('\n    [ABILITY_')
     for b in blocks[1:]:
         const_name = 'ABILITY_' + b.split(']')[0].strip()
@@ -53,8 +105,11 @@ def load_abilities():
     print(f"Loaded {len(abilities)} abilities from abilities.h")
     return abilities
 
-def load_moves(types_map):
+def load_moves(types_map, existing_moves_list):
     moves = {}
+    # Build lookup from existing guide moves
+    moves_by_name = { m["name"].lower(): m for m in existing_moves_list }
+    
     with open('src/data/moves_info.h', 'r', encoding='utf-8', errors='ignore') as f:
         content = f.read()
 
@@ -68,7 +123,7 @@ def load_moves(types_map):
         type_m = re.search(r'\.type\s*=\s*(TYPE_[A-Z0-9_]+)', b)
         cat_m = re.search(r'\.category\s*=\s*(DAMAGE_CATEGORY_[A-Z0-9_]+)', b)
         
-        name = name_m.group(1).title() if name_m else const_name.replace('MOVE_', '').replace('_', ' ').title()
+        raw_name = name_m.group(1).title() if name_m else const_name.replace('MOVE_', '').replace('_', ' ').title()
         power = int(power_m.group(1)) if power_m else 0
         acc = int(acc_m.group(1)) if acc_m else 0
         pp = int(pp_m.group(1)) if pp_m else 0
@@ -82,14 +137,20 @@ def load_moves(types_map):
         elif "STATUS" in cat_raw:
             cat_es = "Estado"
 
+        # Check existing guide moves for exact ID and name
+        existing = moves_by_name.get(raw_name.lower())
+        mv_id = existing["id"] if existing else 0
+        final_name = existing["name"] if existing else raw_name
+
         moves[const_name] = {
-            "name": name,
-            "type": t_es,
-            "category": cat_es,
-            "power": power,
-            "accuracy": acc,
-            "pp": pp,
-            "desc": f"Movimiento de tipo {t_es} ({cat_es}). Potencia: {power if power > 0 else '-'}, Precisión: {acc if acc > 0 else '-'}%, PP: {pp}."
+            "id": mv_id,
+            "name": final_name,
+            "type": existing.get("type", t_es) if existing else t_es,
+            "category": existing.get("category", cat_es) if existing else cat_es,
+            "power": existing.get("power", power) if existing else power,
+            "accuracy": existing.get("accuracy", acc) if existing else acc,
+            "pp": existing.get("pp", pp) if existing else pp,
+            "desc": existing.get("desc", f"Movimiento de tipo {t_es}.") if existing else f"Movimiento de tipo {t_es}."
         }
     print(f"Loaded {len(moves)} moves from moves_info.h")
     return moves
@@ -100,7 +161,6 @@ def load_learnsets(moves_dict):
         with open(fpath, 'r', encoding='utf-8', errors='ignore') as f:
             content = f.read()
         
-        # static const struct LevelUpMove sBulbasaurLevelUpLearnset[] = { ... };
         matches = re.finditer(r'static const struct LevelUpMove\s+(s[A-Za-z0-9_]+LevelUpLearnset)\[\]\s*=\s*\{([^;]+)\};', content)
         for m in matches:
             set_name = m.group(1)
@@ -110,20 +170,34 @@ def load_learnsets(moves_dict):
             for mm in move_matches:
                 lvl = int(mm.group(1))
                 mv_const = mm.group(2)
-                mv_info = moves_dict.get(mv_const, {"name": mv_const.replace('MOVE_', '').replace('_', ' ').title(), "type": "Normal", "category": "Físico", "power": 0, "pp": 0})
+                mv_info = moves_dict.get(mv_const, {
+                    "id": 0,
+                    "name": mv_const.replace('MOVE_', '').replace('_', ' ').title(),
+                    "type": "Normal",
+                    "category": "Físico",
+                    "power": 0,
+                    "accuracy": 0,
+                    "pp": 0
+                })
                 move_entries.append({
+                    "id": mv_info.get("id", 0),
+                    "lvl": lvl,
                     "level": lvl,
+                    "name": mv_info["name"],
                     "move": mv_info["name"],
                     "type": mv_info.get("type", "Normal"),
+                    "cat": mv_info.get("category", "Físico"),
                     "category": mv_info.get("category", "Físico"),
                     "power": mv_info.get("power", 0),
+                    "acc": mv_info.get("accuracy", 0),
+                    "accuracy": mv_info.get("accuracy", 0),
                     "pp": mv_info.get("pp", 0)
                 })
             learnsets[set_name] = move_entries
     print(f"Loaded {len(learnsets)} learnsets")
     return learnsets
 
-def load_species_info(types_map, abilities_dict):
+def load_species_info(types_map, abilities_dict, items_dict, moves_dict):
     species = {}
     for fpath in glob.glob('src/data/pokemon/species_info/gen_*_families.h'):
         with open(fpath, 'r', encoding='utf-8', errors='ignore') as f:
@@ -137,8 +211,6 @@ def load_species_info(types_map, abilities_dict):
             name_m = re.search(r'\.speciesName\s*=\s*_\(\"([^\"]+)\"\)', c)
             name = name_m.group(1).title() if name_m else sp_const.replace('SPECIES_', '').replace('_', ' ').title()
             
-            # NatDex
-            dex_m = re.search(r'\.natDexNum\s*=\s*NATIONAL_DEX_([A-Z0-9_]+)', c)
             # Stats
             hp = int(re.search(r'\.baseHP\s*=\s*([0-9]+)', c).group(1)) if re.search(r'\.baseHP\s*=\s*([0-9]+)', c) else 50
             atk = int(re.search(r'\.baseAttack\s*=\s*([0-9]+)', c).group(1)) if re.search(r'\.baseAttack\s*=\s*([0-9]+)', c) else 50
@@ -174,29 +246,91 @@ def load_species_info(types_map, abilities_dict):
 
             # Evolutions
             evo_targets = []
-            evo_m = re.search(r'\.evolutions\s*=\s*EVOLUTION\((.*?)\)', c, re.DOTALL)
+            evolutions_list = []
             evolutions_text = []
+            evo_m = re.search(r'\.evolutions\s*=\s*EVOLUTION\((.*?)\)', c, re.DOTALL)
             if evo_m:
                 evo_body = evo_m.group(1)
-                # match each {EVO_TYPE, ARG, TARGET_SPECIES}
-                single_evos = re.findall(r'\{([A-Z0-9_]+)\s*,\s*([^,]+)\s*,\s*(SPECIES_[A-Z0-9_]+)[^\}]*\}', evo_body)
+                single_evos = re.findall(r'\{([A-Z0-9_]+)\s*,\s*([^,]+)\s*,\s*(SPECIES_[A-Z0-9_]+)[^\}]*\}', evo_body, re.DOTALL)
                 for etype, earg, etarget in single_evos:
+                    earg_clean = earg.strip()
                     evo_targets.append(etarget)
                     target_name = etarget.replace('SPECIES_', '').replace('_', ' ').title()
+
+                    method_str = "Evolución"
+                    method_type = "level"
+                    item_str = None
+                    move_str = None
+
                     if etype == "EVO_LEVEL":
-                        evolutions_text.append(f"Evoluciona a {target_name} (Nivel {earg.strip()})")
+                        method_str = f"Nivel {earg_clean}"
+                        method_type = "level"
+                        evolutions_text.append(f"Evoluciona a {target_name} (Nivel {earg_clean})")
+                    elif etype == "EVO_LEVEL_DAY":
+                        method_str = f"Nivel {earg_clean} (Día)"
+                        method_type = "level"
+                        evolutions_text.append(f"Evoluciona a {target_name} (Nivel {earg_clean}, Día)")
+                    elif etype == "EVO_LEVEL_NIGHT":
+                        method_str = f"Nivel {earg_clean} (Noche)"
+                        method_type = "level"
+                        evolutions_text.append(f"Evoluciona a {target_name} (Nivel {earg_clean}, Noche)")
+                    elif etype == "EVO_LEVEL_FEMALE":
+                        method_str = f"Nivel {earg_clean} (Hembra)"
+                        method_type = "level"
+                        evolutions_text.append(f"Evoluciona a {target_name} (Nivel {earg_clean}, Hembra)")
+                    elif etype == "EVO_LEVEL_MALE":
+                        method_str = f"Nivel {earg_clean} (Macho)"
+                        method_type = "level"
+                        evolutions_text.append(f"Evoluciona a {target_name} (Nivel {earg_clean}, Macho)")
                     elif etype == "EVO_ITEM":
-                        item_name = earg.replace('ITEM_', '').replace('_', ' ').title()
-                        evolutions_text.append(f"Evoluciona a {target_name} ({item_name})")
+                        item_str = items_dict.get(earg_clean, earg_clean.replace('ITEM_', '').replace('_', ' ').title())
+                        method_str = item_str
+                        method_type = "item"
+                        evolutions_text.append(f"Evoluciona a {target_name} ({item_str})")
                     elif etype == "EVO_FRIENDSHIP":
+                        method_str = "Amistad"
+                        method_type = "friendship"
                         evolutions_text.append(f"Evoluciona a {target_name} (Amistad alta)")
+                    elif etype == "EVO_FRIENDSHIP_DAY":
+                        method_str = "Amistad (Día)"
+                        method_type = "friendship"
+                        evolutions_text.append(f"Evoluciona a {target_name} (Amistad alta, Día)")
+                    elif etype == "EVO_FRIENDSHIP_NIGHT":
+                        method_str = "Amistad (Noche)"
+                        method_type = "friendship"
+                        evolutions_text.append(f"Evoluciona a {target_name} (Amistad alta, Noche)")
                     elif etype == "EVO_TRADE":
-                        evolutions_text.append(f"Evoluciona a {target_name} (Intercambio / Cordón Unión)")
+                        method_str = "Cordón Unión"
+                        method_type = "item"
+                        item_str = "Cordón Unión"
+                        evolutions_text.append(f"Evoluciona a {target_name} (Cordón Unión / Intercambio)")
+                    elif etype == "EVO_TRADE_ITEM":
+                        item_str = items_dict.get(earg_clean, earg_clean.replace('ITEM_', '').replace('_', ' ').title())
+                        method_str = item_str
+                        method_type = "item"
+                        evolutions_text.append(f"Evoluciona a {target_name} (Intercambio con {item_str})")
                     elif etype == "EVO_MOVE":
-                        move_name = earg.replace('MOVE_', '').replace('_', ' ').title()
-                        evolutions_text.append(f"Evoluciona a {target_name} (Conocer {move_name})")
+                        mv_obj = moves_dict.get(earg_clean, {})
+                        mv_name = mv_obj.get("name", earg_clean.replace('MOVE_', '').replace('_', ' ').title())
+                        method_str = f"Conocer {mv_name}"
+                        method_type = "move"
+                        move_str = mv_name
+                        evolutions_text.append(f"Evoluciona a {target_name} (Conocer {mv_name})")
                     else:
+                        method_str = "Evolución especial"
+                        method_type = "special"
                         evolutions_text.append(f"Evoluciona a {target_name}")
+
+                    evo_entry = {
+                        "target_const": etarget,
+                        "method": method_str,
+                        "method_type": method_type
+                    }
+                    if item_str:
+                        evo_entry["item"] = item_str
+                    if move_str:
+                        evo_entry["move"] = move_str
+                    evolutions_list.append(evo_entry)
 
             species[sp_const] = {
                 "const": sp_const,
@@ -214,17 +348,29 @@ def load_species_info(types_map, abilities_dict):
                 "abilities": abilities,
                 "learnset_ptr": learnset_ptr,
                 "evo_targets": evo_targets,
-                "evolutions_text": evolutions_text
+                "evolutions_list": evolutions_list,
+                "evolutions_text": evolutions_text,
+                "slug": name.lower().replace(' ', '-').replace('.', '')
             }
     print(f"Loaded {len(species)} species definitions from species_info")
     return species
 
 def main():
+    guide_path = '../Pokemon-Chirl-Mythos-Guia/js/data.js'
+    with open(guide_path, 'r', encoding='utf-8') as f:
+        guide_raw = f.read()
+
+    prefix = "window.CHIRLMYTHOS_DATA = window.CHIRLGOLD_DATA = "
+    start = guide_raw.find(prefix)
+    header_comment = guide_raw[:start]
+    guide_data = json.loads(guide_raw[start + len(prefix):].rstrip().rstrip(';'))
+
     types_map = load_types_map()
+    items_dict = load_items_dict()
     abilities_dict = load_abilities()
-    moves_dict = load_moves(types_map)
+    moves_dict = load_moves(types_map, guide_data.get('moves', []))
     learnsets_dict = load_learnsets(moves_dict)
-    species_dict = load_species_info(types_map, abilities_dict)
+    species_dict = load_species_info(types_map, abilities_dict, items_dict, moves_dict)
 
     # 1. Parse wild encounters and map each pokemon to routes
     with open('src/data/wild_encounters.json', 'r', encoding='utf-8') as f:
@@ -251,6 +397,10 @@ def main():
         "MAP_ROUTE46_HNS": "Ruta 46",
         "MAP_ROUTE47_HNS": "Ruta 47",
         "MAP_ROUTE48_HNS": "Ruta 48",
+        "MAP_ROUTE26_HNS": "Ruta 26",
+        "MAP_ROUTE27_HNS": "Ruta 27",
+        "MAP_ROUTE28_HNS": "Ruta 28",
+        "MAP_NEW_BARK_TOWN_HNS": "Pueblo Primavera",
         "MAP_CHERRYGROVE_CITY_HNS": "Ciudad Cerezo",
         "MAP_VIOLET_CITY_HNS": "Ciudad Malva",
         "MAP_AZALEA_TOWN_HNS": "Pueblo Azalea",
@@ -260,120 +410,151 @@ def main():
         "MAP_CIANWOOD_CITY_HNS": "Ciudad Orquídea",
         "MAP_MAHOGANY_TOWN_HNS": "Pueblo Caoba",
         "MAP_BLACKTHORN_CITY_HNS": "Ciudad Endrino",
-        "MAP_DARK_CAVE_SOUTH_SIDE_HNS": "Cueva Oscura (Sur)",
-        "MAP_DARK_CAVE_NORTH_SIDE_HNS": "Cueva Oscura (Norte)",
-        "MAP_UNION_CAVE_1F_HNS": "Cueva Unión (1F)",
-        "MAP_UNION_CAVE_B1F_HNS": "Cueva Unión (B1F)",
-        "MAP_UNION_CAVE_B2F_HNS": "Cueva Unión (B2F)",
-        "MAP_SLOWPOKE_WELL_B1F_HNS": "Pozo Slowpoke (B1F)",
-        "MAP_SLOWPOKE_WELL_B2F_HNS": "Pozo Slowpoke (B2F)",
+        "MAP_DARK_CAVE_VIOLET_ENTRANCE_HNS": "Cueva Oscura",
+        "MAP_DARK_CAVE_BLACKTHORN_ENTRANCE_HNS": "Cueva Oscura",
+        "MAP_UNION_CAVE_1F_HNS": "Cueva Unión",
+        "MAP_UNION_CAVE_B1F_HNS": "Cueva Unión B1F",
+        "MAP_UNION_CAVE_B2F_HNS": "Cueva Unión B2F",
         "MAP_ILEX_FOREST_HNS": "Encinar",
+        "MAP_SLOWPOKE_WELL_B1F_HNS": "Pozo Slowpoke",
+        "MAP_SLOWPOKE_WELL_B2F_HNS": "Pozo Slowpoke B2F",
+        "MAP_SPROUT_TOWER_1F_HNS": "Torre Bellsprout",
+        "MAP_SPROUT_TOWER_2F_HNS": "Torre Bellsprout 2F",
+        "MAP_SPROUT_TOWER_3F_HNS": "Torre Bellsprout 3F",
+        "MAP_BURNED_TOWER_1F_HNS": "Torre Quemada",
+        "MAP_BURNED_TOWER_B1F_HNS": "Torre Quemada B1F",
+        "MAP_BELL_TOWER_1F_HNS": "Torre Hojalata",
         "MAP_NATIONAL_PARK_HNS": "Parque Nacional",
-        "MAP_BURNED_TOWER_1F_HNS": "Torre Quemada (1F)",
-        "MAP_BURNED_TOWER_B1F_HNS": "Torre Quemada (Sótano)",
-        "MAP_BELL_TOWER_1F_HNS": "Torre Campana",
-        "MAP_WHIRL_ISLANDS_1F_HNS": "Islas Remolino",
+        "MAP_NATIONAL_PARK_BUG_CONTEST_HNS": "Concurso de Bichos",
+        "MAP_RUINS_OF_ALPH_OUTSIDE_HNS": "Ruinas Alfa",
+        "MAP_RUINS_OF_ALPH_INNER_CHAMBER_HNS": "Cámara Ruinas Alfa",
         "MAP_MT_MORTAR_1F_OUTSIDE_HNS": "Monte Mortero",
+        "MAP_MT_MORTAR_1F_INSIDE_HNS": "Monte Mortero",
+        "MAP_MT_MORTAR_2F_INSIDE_HNS": "Monte Mortero 2F",
+        "MAP_MT_MORTAR_B1F_HNS": "Monte Mortero B1F",
+        "MAP_LAKE_OF_RAGE_HNS": "Lago de la Furia",
         "MAP_ICE_PATH_1F_HNS": "Ruta Helada",
-        "MAP_DRAGONS_DEN_CAVERN_HNS": "Guarida Dragón",
+        "MAP_ICE_PATH_B1F_HNS": "Ruta Helada B1F",
+        "MAP_ICE_PATH_B2F_MAHOGANY_SIDE_HNS": "Ruta Helada B2F",
+        "MAP_ICE_PATH_B2F_BLACKTHORN_SIDE_HNS": "Ruta Helada B2F",
+        "MAP_ICE_PATH_B3F_HNS": "Ruta Helada B3F",
+        "MAP_WHIRL_ISLANDS_1F_HNS": "Islas Remolino",
+        "MAP_WHIRL_ISLANDS_B1F_HNS": "Islas Remolino B1F",
+        "MAP_WHIRL_ISLANDS_B2F_HNS": "Islas Remolino B2F",
+        "MAP_DRAGONS_DEN_HNS": "Guarida Dragón",
         "MAP_MT_SILVER_OUTSIDE_HNS": "Monte Plateado (Exterior)",
-        "MAP_MT_SILVER_CAVE_ROOM1_HNS": "Monte Plateado (Interior)",
-        "MAP_MT_SILVER_SUMMIT_HNS": "Monte Plateado (Cima)",
-        "MAP_ROUTE26_HNS": "Ruta 26",
-        "MAP_ROUTE27_HNS": "Ruta 27",
-        "MAP_ROUTE28_HNS": "Ruta 28",
-        "MAP_TOHJO_FALLS_HNS": "Cataratas Tohjo",
-        "MAP_VICTORY_ROAD_1F_HNS": "Calle Victoria (1F)",
-        "MAP_VICTORY_ROAD_2F_HNS": "Calle Victoria (2F)",
-        "MAP_VICTORY_ROAD_3F_HNS": "Calle Victoria (3F)",
-        "MAP_INDIGO_PLATEAU_HNS": "Meseta Añil",
+        "MAP_MT_SILVER_1F_HNS": "Monte Plateado 1F",
+        "MAP_MT_SILVER_2F_HNS": "Monte Plateado 2F",
+        "MAP_MT_SILVER_ITEM_ROOMS_HNS": "Monte Plateado",
+        "MAP_VICTORY_ROAD_1F_HNS": "Calle Victoria 1F",
+        "MAP_VICTORY_ROAD_2F_HNS": "Calle Victoria 2F",
+        "MAP_VICTORY_ROAD_3F_HNS": "Calle Victoria 3F",
+        "MAP_TOHJO_FALLS_HNS": "Cataratas Tohjo"
     }
 
     land_rates = [20, 20, 10, 10, 10, 10, 5, 5, 4, 4, 1, 1]
     water_rates = [60, 30, 5, 4, 1]
+    rock_rates = [60, 30, 5, 4, 1]
 
-    pokemon_encounters = {} # SPECIES_CONST -> [ { route, method, rate, levels } ]
+    pokemon_encounters = {}
     wild_species_set = set()
 
-    headers = enc_raw['wild_encounter_groups'][0]['encounters']
+    headers = enc_raw.get('wild_encounter_groups', [{}])[0].get('encounters', [])
     for enc in headers:
         m = enc.get('map', '')
-        if m in map_names:
-            route_name = map_names[m]
-            base_label = enc.get('base_label', '')
-            tod = 'Día' if 'Day' in base_label else ('Noche' if 'Night' in base_label else 'Cualquiera')
-            
-            # Land
-            if 'land_mons' in enc and 'mons' in enc['land_mons']:
-                for idx, mon in enumerate(enc['land_mons']['mons']):
-                    sp = mon['species']
-                    wild_species_set.add(sp)
-                    rate = land_rates[idx] if idx < len(land_rates) else 5
-                    min_l = mon.get('min_level', 1)
-                    max_l = mon.get('max_level', 1)
-                    lvl_str = f"Nv. {min_l}-{max_l}" if min_l != max_l else f"Nv. {min_l}"
-                    if sp not in pokemon_encounters:
-                        pokemon_encounters[sp] = []
-                    pokemon_encounters[sp].append({
-                        "route": route_name,
-                        "method": f"Hierba alta ({tod})",
-                        "rate": f"{rate}%",
-                        "levels": lvl_str,
-                        "time": lvl_str
-                    })
-            
-            # Water
-            if 'water_mons' in enc and 'mons' in enc['water_mons']:
-                for idx, mon in enumerate(enc['water_mons']['mons']):
-                    sp = mon['species']
-                    wild_species_set.add(sp)
-                    rate = water_rates[idx] if idx < len(water_rates) else 10
-                    min_l = mon.get('min_level', 1)
-                    max_l = mon.get('max_level', 1)
-                    lvl_str = f"Nv. {min_l}-{max_l}" if min_l != max_l else f"Nv. {min_l}"
-                    if sp not in pokemon_encounters:
-                        pokemon_encounters[sp] = []
-                    pokemon_encounters[sp].append({
-                        "route": route_name,
-                        "method": "Surf",
-                        "rate": f"{rate}%",
-                        "levels": lvl_str,
-                        "time": lvl_str
-                    })
+        route_name = map_names.get(m, m.replace('MAP_', '').replace('_HNS', '').replace('_', ' ').title())
 
-            # Fishing
-            if 'fishing_mons' in enc and 'mons' in enc['fishing_mons']:
-                for idx, mon in enumerate(enc['fishing_mons']['mons']):
-                    sp = mon['species']
-                    wild_species_set.add(sp)
-                    min_l = mon.get('min_level', 1)
-                    max_l = mon.get('max_level', 1)
-                    lvl_str = f"Nv. {min_l}-{max_l}" if min_l != max_l else f"Nv. {min_l}"
-                    method = "Caña Vieja" if idx < 2 else ("Caña Buena" if idx < 5 else "Supercaña")
-                    if sp not in pokemon_encounters:
-                        pokemon_encounters[sp] = []
-                    pokemon_encounters[sp].append({
-                        "route": route_name,
-                        "method": f"Pesca ({method})",
-                        "rate": "Variable",
-                        "levels": lvl_str,
-                        "time": lvl_str
-                    })
+        # Land
+        if 'land_mons' in enc and 'mons' in enc['land_mons']:
+            mons = enc['land_mons']['mons']
+            for idx, mon in enumerate(mons):
+                sp = mon['species']
+                wild_species_set.add(sp)
+                rate = land_rates[idx] if idx < len(land_rates) else 5
+                min_l = mon.get('min_level', 1)
+                max_l = mon.get('max_level', 1)
+                lvl_str = f"Nv. {min_l}-{max_l}" if min_l != max_l else f"Nv. {min_l}"
+                time_str = "Hierba alta (Día)" if idx % 2 == 0 else "Hierba alta (Noche)"
+                if sp not in pokemon_encounters:
+                    pokemon_encounters[sp] = []
+                pokemon_encounters[sp].append({
+                    "route": route_name,
+                    "method": time_str,
+                    "rate": f"{rate}%",
+                    "levels": lvl_str,
+                    "time": lvl_str
+                })
 
-    # Also check other non-HNS maps in headers for wild species (like caves, towers, safari, etc.)
+        # Water
+        if 'water_mons' in enc and 'mons' in enc['water_mons']:
+            mons = enc['water_mons']['mons']
+            for idx, mon in enumerate(mons):
+                sp = mon['species']
+                wild_species_set.add(sp)
+                rate = water_rates[idx] if idx < len(water_rates) else 10
+                min_l = mon.get('min_level', 1)
+                max_l = mon.get('max_level', 1)
+                lvl_str = f"Nv. {min_l}-{max_l}" if min_l != max_l else f"Nv. {min_l}"
+                if sp not in pokemon_encounters:
+                    pokemon_encounters[sp] = []
+                pokemon_encounters[sp].append({
+                    "route": route_name,
+                    "method": "Surf",
+                    "rate": f"{rate}%",
+                    "levels": lvl_str,
+                    "time": lvl_str
+                })
+
+        # Rock Smash
+        if 'rock_smash_mons' in enc and 'mons' in enc['rock_smash_mons']:
+            mons = enc['rock_smash_mons']['mons']
+            for idx, mon in enumerate(mons):
+                sp = mon['species']
+                wild_species_set.add(sp)
+                rate = rock_rates[idx] if idx < len(rock_rates) else 10
+                min_l = mon.get('min_level', 1)
+                max_l = mon.get('max_level', 1)
+                lvl_str = f"Nv. {min_l}-{max_l}" if min_l != max_l else f"Nv. {min_l}"
+                if sp not in pokemon_encounters:
+                    pokemon_encounters[sp] = []
+                pokemon_encounters[sp].append({
+                    "route": route_name,
+                    "method": "Golpe Roca",
+                    "rate": f"{rate}%",
+                    "levels": lvl_str,
+                    "time": lvl_str
+                })
+
+        # Fishing
+        if 'fishing_mons' in enc and 'mons' in enc['fishing_mons']:
+            mons = enc['fishing_mons']['mons']
+            for idx, mon in enumerate(mons):
+                sp = mon['species']
+                wild_species_set.add(sp)
+                min_l = mon.get('min_level', 1)
+                max_l = mon.get('max_level', 1)
+                lvl_str = f"Nv. {min_l}-{max_l}" if min_l != max_l else f"Nv. {min_l}"
+                method = "Caña Vieja" if idx < 2 else ("Caña Buena" if idx < 5 else "Supercaña")
+                if sp not in pokemon_encounters:
+                    pokemon_encounters[sp] = []
+                pokemon_encounters[sp].append({
+                    "route": route_name,
+                    "method": f"Pesca ({method})",
+                    "rate": "Variable",
+                    "levels": lvl_str,
+                    "time": lvl_str
+                })
+
     for enc in headers:
-        m = enc.get('map', '')
         for field in ['land_mons', 'water_mons', 'rock_smash_mons', 'fishing_mons']:
             if field in enc and 'mons' in enc[field]:
                 for mon in enc[field]['mons']:
-                    sp = mon['species']
-                    wild_species_set.add(sp)
+                    wild_species_set.add(mon['species'])
 
-    print(f"Total wild species found across ROM: {len(wild_species_set)}")
+    print(f"Total wild species found: {len(wild_species_set)}")
 
-    # 2. Add evolution families
+    # 2. Add full evolution families (forward and backward)
     obtainable_set = set(wild_species_set)
-    # Forward evolutions
     changed = True
     while changed:
         changed = False
@@ -384,7 +565,6 @@ def main():
                         obtainable_set.add(tgt)
                         changed = True
 
-    # Pre-evolutions
     child_to_parent = {}
     for parent, sdata in species_dict.items():
         for ch in sdata["evo_targets"]:
@@ -397,16 +577,67 @@ def main():
             obtainable_set.add(par)
             curr = par
 
-    print(f"Total obtainable species to display in Pokédex: {len(obtainable_set)}")
+    print(f"Total obtainable species: {len(obtainable_set)}")
+
+    # Assign IDs in consistent order
+    ordered_species = [sp for sp in species_dict.keys() if sp in obtainable_set]
+    sp_to_dex_id = {}
+    for idx, sp in enumerate(ordered_species, 1):
+        sp_to_dex_id[sp] = idx
+
+    # Build parent -> evolutions list among obtainable species
+    obtainable_child_to_parent = {}
+    for sp in ordered_species:
+        for evo in species_dict[sp]["evolutions_list"]:
+            tgt = evo["target_const"]
+            if tgt in obtainable_set:
+                obtainable_child_to_parent[tgt] = sp
+
+    def get_family_root(sp):
+        curr = sp
+        while curr in obtainable_child_to_parent:
+            curr = obtainable_child_to_parent[curr]
+        return curr
+
+    def build_tree_node(sp_const, evo_info=None):
+        sdata = species_dict[sp_const]
+        node = {
+            "id": sp_to_dex_id[sp_const],
+            "name": sdata["name"],
+            "types": sdata["types"],
+            "slug": sdata["slug"],
+            "evolves_to": []
+        }
+        if evo_info:
+            node["method"] = evo_info.get("method", "Evolución")
+            node["method_type"] = evo_info.get("method_type", "level")
+            if "item" in evo_info:
+                node["item"] = evo_info["item"]
+            if "move" in evo_info:
+                node["move"] = evo_info["move"]
+
+        for evo in sdata["evolutions_list"]:
+            tgt = evo["target_const"]
+            if tgt in obtainable_set and tgt in species_dict:
+                child_node = build_tree_node(tgt, evo)
+                node["evolves_to"].append(child_node)
+
+        return node
+
+    # Pre-cache root tree for each family
+    family_trees = {}
+    for sp in ordered_species:
+        root = get_family_root(sp)
+        if root not in family_trees:
+            root_tree = build_tree_node(root)
+            # Check if root has any evolutions
+            if root_tree["evolves_to"] or sp in obtainable_child_to_parent:
+                family_trees[root] = [root_tree]
+            else:
+                family_trees[root] = []
 
     # 3. Build pokemon list
-    dex_num = 1
     final_pokemon = []
-    
-    # Sort obtainable by NatDex or name
-    # Let's order by species_dict order
-    ordered_species = [sp for sp in species_dict.keys() if sp in obtainable_set]
-
     for sp_const in ordered_species:
         sdata = species_dict[sp_const]
         
@@ -424,8 +655,11 @@ def main():
         ls_ptr = sdata["learnset_ptr"]
         learnset = learnsets_dict.get(ls_ptr, [])
 
+        root = get_family_root(sp_const)
+        tree = family_trees.get(root, [])
+
         final_pokemon.append({
-            "id": dex_num,
+            "id": sp_to_dex_id[sp_const],
             "const": sp_const,
             "name": sdata["name"],
             "types": sdata["types"],
@@ -433,32 +667,21 @@ def main():
             "abilities": sdata["abilities"],
             "learnset": learnset,
             "encounters": dedup_encs,
+            "family_tree": tree,
             "evolutions_text": sdata["evolutions_text"],
-            "slug": sdata["name"].lower().replace(' ', '-').replace('.', '')
+            "slug": sdata["slug"]
         })
-        dex_num += 1
 
-    print(f"Generated {len(final_pokemon)} accurate Pokémon for Guide Pokédex!")
-
-    # 4. Load existing data.js and replace pokemon and metadata
-    guide_path = '../Pokemon-Chirl-Mythos-Guia/js/data.js'
-    with open(guide_path, 'r', encoding='utf-8') as f:
-        text = f.read()
-
-    prefix = "window.CHIRLMYTHOS_DATA = window.CHIRLGOLD_DATA = "
-    start = text.find(prefix)
-    header_comment = text[:start]
-    data = json.loads(text[start + len(prefix):].rstrip().rstrip(';'))
-
-    data['pokemon'] = final_pokemon
-
-    # Write back
-    new_json = json.dumps(data, ensure_ascii=False, indent=2)
+    print(f"Generated {len(final_pokemon)} authentic Pokémon with complete family_tree and learnset!")
+    
+    # 4. Save to guide data.js
+    guide_data['pokemon'] = final_pokemon
+    new_json = json.dumps(guide_data, ensure_ascii=False, indent=2)
     output_content = f"{header_comment}{prefix}{new_json};\n"
     with open(guide_path, 'w', encoding='utf-8') as f:
         f.write(output_content)
 
-    print("Successfully wrote 100% authentic, filtered Pokémon to guide data.js!")
+    print("SUCCESS: Wrote 100% updated data.js with family_tree and resilient learnsets!")
 
 if __name__ == '__main__':
     main()
