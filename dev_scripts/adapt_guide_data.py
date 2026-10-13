@@ -187,22 +187,47 @@ def main():
     data['routes'] = new_routes_list
     print(f"Total routes in updated data: {len(data['routes'])}")
 
-    # 4. Update Features & QoL for Pokemon Chirl Mythos (GBA)
+    # 4. Parse PLAN_DE_ACCION.md dynamically
+    roadmap = []
+    with open('PLAN_DE_ACCION.md', 'r', encoding='utf-8') as f:
+        p_lines = f.readlines()
+    for line in p_lines:
+        line = line.strip()
+        if line.startswith('|') and not line.startswith('| número') and not line.startswith('| :---:'):
+            parts = [p.strip() for p in line.split('|')[1:-1]]
+            if len(parts) >= 4:
+                p_num = parts[0].replace('**', '')
+                p_name = parts[1]
+                p_desc = parts[2]
+                p_stat = parts[3]
+                roadmap.append({
+                    "id": p_num,
+                    "title": p_name,
+                    "desc": p_desc,
+                    "status": p_stat
+                })
+    data['roadmap'] = roadmap
+    print(f"Loaded {len(roadmap)} items into roadmap!")
+
+    # 5. Update Features & QoL for Pokemon Chirl Mythos distinguishing current state vs roadmap
     data['features'] = {
-        "qol": [
-            "Motor Base GBA Descompilado (HD 2D): Desarrollado sobre la arquitectura de decompilación de Game Boy Advance con la región de Johto y Kanto recreada fielmente con gráficos nítidos y sin cuelgues.",
-            "Motor de Combate Completo Gen 9 en GBA: División Físico/Especial por icono, tipo Hada introducido, movimientos y habilidades modernas actualizadas hasta la última generación.",
-            "Velocidad de Diálogo Instantánea/Rápida: El texto fluye a máxima velocidad por defecto en todas las conversaciones y eventos.",
-            "Animaciones de Combate Optimizadas: Entrada a batalla acelerada y transiciones ágiles para un combate dinámico.",
-            "Omisión de Pausas de Texto: Eliminadas las demoras y pausas artificiales en diálogos de NPCs para una lectura fluida.",
-            "Curación Exprés en Centros Pokémon: La Enfermera Joy atiende a tu equipo de forma directa y veloz, ahorrando tiempo en cada visita.",
-            "Menús Limpios y Sin Distracciones: Supresión total de menús y opciones innecesarias de Nuzlocke y Randomizador; el juego está calibrado en su dificultad nativa.",
-            "Sistema de Level Caps Estricto: Curva de dificultad equilibrada por cada medalla de gimnasio para garantizar combates estratégicos sin requerir grindeo excesivo.",
-            "Progresión Limpia de EVs e IVs: Eliminadas las restricciones competitivas artificiales de EVs e IVs basadas en medallas, permitiendo un entrenamiento natural.",
-            "Ciclo Día y Noche en Tiempo Real (RTC GBA): Encuentros salvajes diferenciados por franja horaria (mañana/día y noche) utilizando el reloj interno de GBA.",
-            "Megaevoluciones en Combate GBA: Activa la transformación en combate pulsando START antes de seleccionar tu movimiento, tras equipar la correspondiente Megapiedra y portar el Mega-Aro.",
-            "Controles Ergonómicos Nativos GBA: Soporte completo para mandos físicos (D-Pad, A, B, L, R, Start, Select) sin necesidad de emulación táctil ni doble pantalla.",
-            "Traducción 100% en Castellano Oficial: Nombres de ataques, habilidades, objetos, lugares y diálogos adaptados a la localización oficial de Nintendo España y WikiDex."
+        "implemented": [
+            "ROM Base GBA Compilada y Operativa (v0.1.0): Arquitectura de decompilación pokeemerald-expansion con Johto y Kanto sobre motor GBA en 32 MB.",
+            "Localización en Curso (Paso 2.0 / v0.2.5): Menús principales, selector de nombres, intro del Prof. Oak, diálogos de Pueblo Primavera, Laboratorio Elm, Rutas 29 a 31 y Ciudad Cerezo 100% traducidos al castellano oficial (Nintendo España / WikiDex).",
+            "Glosario Maestro de Combate (v0.2.5): Movimientos, habilidades, objetos, naturalezas y tipos adaptados a la terminología canónica española.",
+            "Encuentros Salvajes Johto GBA: 45 rutas y mapas (_HNS) con tablas de aparición diurnas y nocturnas extraídas directamente de wild_encounters.json."
+        ],
+        "in_progress": [
+            "Traducción Integral de Johto y Kanto (Paso 2.0): Localización de los scripts restantes de ciudades, gimnasios, Team Rocket y eventos principales."
+        ],
+        "planned": [
+            "Paso 3.0: Eliminación de menús de opciones y configuración fija de calidad de vida (texto rápido, animaciones aceleradas, omisión de pausas, curación rápida de la enfermera Joy, supresión total de Nuzlocke y randomizador, fijar level caps estilo HeartGold).",
+            "Paso 4.0: Optimización de tasa de refresco a 60 FPS nativos reales.",
+            "Paso 5.0: Activación de Megaevoluciones (botón START) y Movimientos Z; desactivación de Dinamax; modo Set activo por defecto.",
+            "Paso 6.0: Ajustes de especies y evoluciones especiales (Cyndaquil con Piel Seca y Typhlosion de Hisui).",
+            "Paso 7.0: Repartir Experiencia para todo el equipo y activación de MOs sin necesidad de enseñarlas.",
+            "Paso 8.0: Tiendas competitivas de 56 objetos en C.C. Trigal y Azulona.",
+            "Paso 9.0+: Especialistas de entrenamiento extremo, embajadores de iniciales, eventos de Celebi, Giovanni y jefes especiales."
         ],
         "bugs": [
             {
@@ -220,11 +245,11 @@ def main():
         ]
     }
 
-    # 5. Update non_included
+    # 6. Update non_included
     data['non_included'] = [
         {
             "name": "Modos Nuzlocke y Randomizador en Menú",
-            "reason": "Eliminados por diseño para preservar la experiencia de aventura pura y equilibrada."
+            "reason": "Eliminados por diseño para preservar la experiencia de aventura pura y equilibrada (Paso 3.0)."
         },
         {
             "name": "Restricciones Artificiales de EVs por Medalla",
@@ -236,14 +261,14 @@ def main():
         }
     ]
 
-    # 6. Save back to js/data.js
+    # 7. Save back to js/data.js
     new_json = json.dumps(data, ensure_ascii=False, indent=2)
     output_content = f"/* Pokémon Chirl Mythos v0.2.5 - Base de Datos Oficial */\nwindow.CHIRLMYTHOS_VERSION = \"v0.2.5\";\nwindow.CHIRLGOLD_VERSION = window.CHIRLMYTHOS_VERSION;\n{prefix}{new_json};\n"
 
     with open(guide_data_path, 'w', encoding='utf-8') as f:
         f.write(output_content)
 
-    print("Successfully wrote updated, authentic GBA data to Pokemon-Chirl-Mythos-Guia/js/data.js!")
+    print("Successfully wrote updated, authentic GBA data and roadmap to Pokemon-Chirl-Mythos-Guia/js/data.js!")
 
 if __name__ == '__main__':
     main()
