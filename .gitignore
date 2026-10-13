@@ -4,6 +4,7 @@
 *.elf
 *.gba
 !data/*.gba
+guia_web/
 *.sgm
 *.sa1
 *.ss[0-9]
