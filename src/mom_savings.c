@@ -7,6 +7,7 @@
 #include "constants/decorations.h"
 #include "constants/vars.h"
 #include "constants/flags.h"
+#include "constants/flags_hns.h"
 #include "event_data.h"
 #include "string_util.h"
 #include "strings.h"

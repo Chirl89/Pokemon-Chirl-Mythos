@@ -12,6 +12,7 @@
 #include "fieldmap.h"
 #include "party_menu.h"
 #include "fldeff.h"
+#include "constants/flags_hns.h"
 
 EWRAM_DATA static bool8 sIsRegisteelPuzzle = 0;
 
